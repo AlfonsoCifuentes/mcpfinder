@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCPFinder — Discover MCP Servers</title>
+  <meta name="description" content="Curated, searchable directory of Model Context Protocol (MCP) servers. Find the right server for GitHub, Stripe, databases, browser automation and more.">
+  <meta property="og:title" content="MCPFinder — Discover MCP Servers">
+  <meta property="og:description" content="The curated directory of MCP servers. Search by category, copy install commands, and connect your AI to any tool.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --accent: #7c3aed;
+      --accent-light: #8b5cf6;
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #1a1a24;
+      --border: #2a2a38;
+      --text: #e8e8f0;
+      --muted: #888899;
+    }
+    * { box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; margin: 0; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover {
+      border-color: var(--accent-light);
+      transform: translateY(-2px);
+    }
+    .badge-official {
+      background: linear-gradient(135deg, #7c3aed22, #7c3aed44);
+      border: 1px solid #7c3aed66;
+      color: #c4b5fd;
+    }
+    .badge-category {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .search-input {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--accent-light); }
+    .search-input::placeholder { color: var(--muted); }
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+    .copy-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: monospace;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .copy-btn:hover { border-color: var(--accent-light); color: #c4b5fd; }
+    .copy-btn.copied { border-color: #22c55e; color: #22c55e; }
+    .hero-gradient {
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, #7c3aed18, transparent);
+    }
+    .stars {
+      color: #f59e0b;
+      font-size: 12px;
+    }
+    .tag {
+      background: var(--surface2);
+      color: var(--muted);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 11px;
+    }
+    #no-results { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hero-gradient border-b border-[var(--border)]">
+  <div class="max-w-6xl mx-auto px-4 py-6">
+    <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #7c3aed, #a855f7);">🔍</div>
+        <span class="text-xl font-bold">MCPFinder</span>
+      </div>
+      <a href="https://github.com/AlfonsoCifuentes/mcpfinder" target="_blank" rel="noopener"
+         class="text-sm text-[var(--muted)] hover:text-white transition-colors flex items-center gap-2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+
+    <div class="text-center mb-8">
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Discover <span style="color: #a855f7;">MCP Servers</span>
+      </h1>
+      <p class="text-[var(--muted)] text-lg max-w-xl mx-auto">
+        Curated directory of Model Context Protocol servers. Find, install, and connect your AI to any tool.
+      </p>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="max-w-2xl mx-auto mb-6">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)] w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" id="search" class="search-input" placeholder="Search servers (e.g. postgres, github, stripe...)">
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="flex justify-center gap-6 text-sm text-[var(--muted)]">
+      <span id="stat-total" class="flex items-center gap-1">
+        <span class="text-white font-semibold">20</span> servers
+      </span>
+      <span class="flex items-center gap-1">
+        <span class="text-white font-semibold">8</span> categories
+      </span>
+      <span class="flex items-center gap-1">
+        <span class="text-[#22c55e] font-semibold">●</span> Updated daily
+      </span>
+    </div>
+  </div>
+</header>
+
+<!-- FILTERS -->
+<div class="max-w-6xl mx-auto px-4 py-4">
+  <div class="flex gap-2 flex-wrap" id="filters">
+    <button class="filter-btn active" data-category="all">All</button>
+    <button class="filter-btn" data-category="dev-tools">Dev Tools</button>
+    <button class="filter-btn" data-category="databases">Databases</button>
+    <button class="filter-btn" data-category="productivity">Productivity</button>
+    <button class="filter-btn" data-category="browser">Browser</button>
+    <button class="filter-btn" data-category="ai-infra">AI Infra</button>
+    <button class="filter-btn" data-category="search">Search</button>
+    <button class="filter-btn" data-category="payments">Payments</button>
+    <button class="filter-btn" data-category="location">Location</button>
+  </div>
+</div>
+
+<!-- GRID -->
+<main class="max-w-6xl mx-auto px-4 pb-16">
+  <div id="grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+
+  <div id="no-results" class="text-center py-20 text-[var(--muted)]">
+    <div class="text-4xl mb-3">🔍</div>
+    <p class="text-lg">No servers found for "<span id="no-results-term"></span>"</p>
+    <p class="text-sm mt-1">Try a different keyword or category</p>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="border-t border-[var(--border)] py-8">
+  <div class="max-w-6xl mx-auto px-4 text-center text-sm text-[var(--muted)]">
+    <p>MCPFinder is not affiliated with Anthropic. MCP is an open protocol.</p>
+    <p class="mt-1">
+      <a href="https://modelcontextprotocol.io" target="_blank" class="hover:text-white transition-colors">MCP Docs</a>
+      <span class="mx-2">·</span>
+      <a href="https://github.com/AlfonsoCifuentes/mcpfinder" target="_blank" class="hover:text-white transition-colors">Add a Server</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+const CATEGORY_LABELS = {
+  'dev-tools': 'Dev Tools',
+  'databases': 'Databases',
+  'productivity': 'Productivity',
+  'browser': 'Browser',
+  'ai-infra': 'AI Infra',
+  'search': 'Search',
+  'payments': 'Payments',
+  'location': 'Location'
+};
+
+const LANG_COLORS = {
+  'TypeScript': '#3178c6',
+  'Python': '#3572A5',
+  'JavaScript': '#f1e05a'
+};
+
+let allServers = [];
+let activeCategory = 'all';
+let searchTerm = '';
+
+function formatStars(n) {
+  return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : n;
+}
+
+function renderCard(server) {
+  const langColor = LANG_COLORS[server.language] || '#888';
+  return `
+    <div class="card p-5 flex flex-col gap-3" data-id="${server.id}">
+      <div class="flex items-start justify-between gap-2">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap mb-1">
+            <h3 class="font-semibold text-base leading-tight">${server.name}</h3>
+            ${server.official ? '<span class="badge-official text-xs px-2 py-0.5 rounded-full font-medium">Official</span>' : ''}
+          </div>
+          <p class="text-sm text-[var(--muted)] leading-relaxed">${server.description}</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 text-xs text-[var(--muted)]">
+        <span class="flex items-center gap-1">
+          <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:${langColor}"></span>
+          ${server.language}
+        </span>
+        <span class="stars flex items-center gap-1">★ ${formatStars(server.stars)}</span>
+        <span class="badge-category text-xs px-2 py-0.5 rounded-full">${CATEGORY_LABELS[server.category] || server.category}</span>
+      </div>
+
+      <div class="flex flex-wrap gap-1">
+        ${server.tags.slice(0, 4).map(t => `<span class="tag">#${t}</span>`).join('')}
+      </div>
+
+      <div class="mt-auto pt-2 border-t border-[var(--border)] flex gap-2">
+        <button class="copy-btn flex-1 justify-center" onclick="copyInstall(this, '${server.install.replace(/'/g, "\\'")}')">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy install
+        </button>
+        <a href="${server.repo}" target="_blank" rel="noopener"
+           class="copy-btn no-underline justify-center px-3">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Repo
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+function copyInstall(btn, cmd) {
+  navigator.clipboard.writeText(cmd).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2-2v1"/></svg> Copy install`;
+    }, 2000);
+  });
+}
+
+function applyFilters() {
+  const term = searchTerm.toLowerCase();
+  const filtered = allServers.filter(s => {
+    const matchCat = activeCategory === 'all' || s.category === activeCategory;
+    const matchSearch = !term ||
+      s.name.toLowerCase().includes(term) ||
+      s.description.toLowerCase().includes(term) ||
+      s.tags.some(t => t.includes(term)) ||
+      s.author.toLowerCase().includes(term);
+    return matchCat && matchSearch;
+  });
+
+  const grid = document.getElementById('grid');
+  const noResults = document.getElementById('no-results');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    noResults.style.display = 'block';
+    document.getElementById('no-results-term').textContent = term || activeCategory;
+  } else {
+    noResults.style.display = 'none';
+    grid.innerHTML = filtered.map(renderCard).join('');
+  }
+
+  document.getElementById('stat-total').innerHTML =
+    `<span class="text-white font-semibold">${filtered.length}</span> servers`;
+}
+
+// Load data
+fetch('data/servers.json')
+  .then(r => r.json())
+  .then(data => {
+    allServers = data.sort((a, b) => b.stars - a.stars);
+    applyFilters();
+  });
+
+// Search
+document.getElementById('search').addEventListener('input', e => {
+  searchTerm = e.target.value;
+  applyFilters();
+});
+
+// Filters
+document.getElementById('filters').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeCategory = btn.dataset.category;
+  applyFilters();
+});
+</script>
+</body>
+</html>
