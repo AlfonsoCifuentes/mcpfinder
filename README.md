@@ -44,7 +44,7 @@ Este repositorio plantea una herramienta utilizable en escenarios reales, con fo
 | Complejidad | Advanced |
 | Lenguaje principal | HTML |
 | Primera version | 10 de mayo de 2026 |
-| Ultima actualizacion | 12 de mayo de 2026 |
+| Ultima actualizacion | 21 de mayo de 2026 |
 
 ## Enlaces
 
