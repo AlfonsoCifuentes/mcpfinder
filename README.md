@@ -1,38 +1,61 @@
-# MCPFinder
+# McpFinder
 
-> Curated, searchable directory of MCP (Model Context Protocol) servers.
+> McpFinder: herramienta pequeña, enfocada y orientada a resolver un problema concreto
 
-**Live:** https://mcpfinder.vercel.app
+## Resumen
 
-## Features
+Directorio curado y buscable de servidores MCP para encontrar el Model Context Protocol adecuado en segundos.
 
-- Search 20+ curated MCP servers
-- Filter by category: Dev Tools, Databases, Productivity, Browser, AI Infra...
-- One-click copy of install commands (`npx`, `uvx`)
-- Star counts, language badges, official server tags
-- Dark theme, mobile responsive, zero dependencies
+## Valor del proyecto
 
-## How it works
+Ayuda a demostrar criterio de producto, capacidad para recortar alcance y foco en construir soluciones pequeñas pero útiles.
 
-Pure static HTML/JS. Servers defined in `data/servers.json`. No build step.
+Este repositorio plantea una herramienta utilizable en escenarios reales, con foco en automatizacion, eficiencia operativa y calidad del flujo de trabajo.
 
-## Add a server
+## Funcionalidades o puntos fuertes
 
-Open a PR editing `data/servers.json` with:
-- `name`, `description`, `category`, `tags`, `author`
-- `official` (true/false), `stars`, `language`, `license`
-- `repo`, `install`, `inspect` (npx @modelcontextprotocol/inspector ... cmd)
+- Propuesta de valor inmediata y muy enfocada
+- Flujo de uso corto y fácil de entender
+- Narrativa de producto pensada para explicar utilidad real
+- Stack principal visible y coherente: MCP, Developer Tools, Directory y HTML.
 
-## Categories
+## Stack principal
 
-`dev-tools` · `databases` · `productivity` · `browser` · `ai-infra` · `search` · `payments` · `location`
+- MCP
+- Developer Tools
+- Directory
+- HTML
+- Creadas con OpenClaw
+- micro-SaaS
 
-## Tech
+## Como explorar este proyecto
 
-- Vanilla HTML/CSS/JS
-- Tailwind CSS (CDN)
-- Vercel (static hosting)
+- Identificar el problema concreto que automatiza o simplifica.
+- Revisar la logica principal, los flujos de entrada y las salidas que produce.
+- Evaluar como podria integrarse en un stack mayor o en un entorno de equipo.
 
-## License
+## Ficha rapida
 
-MIT
+| Campo | Detalle |
+| --- | --- |
+| Repositorio | mcpfinder |
+| Categoria | Software Development |
+| Grupo | Herramientas |
+| Complejidad | Advanced |
+| Lenguaje principal | HTML |
+| Primera version | 10 de mayo de 2026 |
+| Ultima actualizacion | 12 de mayo de 2026 |
+
+## Enlaces
+
+- Demo en vivo: https://mcpfinder.vercel.app/
+- Repositorio: https://github.com/AlfonsoCifuentes/mcpfinder
+
+## Tags
+
+- Creadas con OpenClaw
+- micro-SaaS
+
+## Nota
+
+Este README se ha generado a partir del catalogo enriquecido del portfolio para mantener una descripcion consistente, explicativa y lista para evolucionar en cada repositorio.
